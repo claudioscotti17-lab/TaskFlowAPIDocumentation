@@ -1,0 +1,28 @@
+
+openapi: 3.0.3
+
+info:
+  title: TaskFlow API
+  version: 1.0.0
+  description: |
+    TaskFlow is a REST API for managing projects
+    and their associated tasks.
+
+    Create projects, add tasks, track progress,
+    and manage task lifecycles.
+
+servers:
+  - url: https://test-writechoice.onrender.com
+    description: TaskFlow API server
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API key authentication using a Bearer token.
+
+paths: {}
