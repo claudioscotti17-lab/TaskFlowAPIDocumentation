@@ -1,0 +1,186 @@
+---
+title: "Troubleshooting"
+description: "Identify and resolve common TaskFlow API errors."
+---
+
+# Troubleshooting
+
+This guide helps you identify and resolve common errors when working with the TaskFlow API.
+
+If a request fails, start by checking the HTTP status code and the `message` field in the response.
+
+## Common HTTP errors
+
+| Status | Meaning | Common cause |
+| --- | --- | --- |
+| `400 Bad Request` | The request contains invalid data. | Missing required fields or invalid task status. |
+| `401 Unauthorized` | Authentication failed. | Missing or invalid API key. |
+| `404 Not Found` | The requested resource does not exist. | Incorrect project ID or task ID. |
+
+## 400 Bad Request
+
+A `400 Bad Request` response indicates that the API could not process the request because of invalid input.
+
+### Missing project name
+
+When creating a project, the `name` field is required and must contain a non-empty string.
+
+**Example error response:**
+
+```json
+{
+  "error": "Bad Request",
+  "message": "The 'name' field is required and must be a non-empty string."
+}
+```
+
+**How to fix it:**
+
+Include a valid `name` in the request body.
+
+```json
+{
+  "name": "API Documentation Revamp",
+  "description": "Technical documentation validation project"
+}
+```
+
+### Invalid task status
+
+The API accepts only three task status values:
+
+- `pending`
+- `in_progress`
+- `done`
+
+Using a value such as `completed` returns:
+
+```json
+{
+  "error": "Bad Request",
+  "message": "Invalid status 'completed'. Allowed values are: pending, in_progress, done."
+}
+```
+
+**How to fix it:**
+
+Use one of the supported values when updating a task.
+
+```json
+{
+  "status": "done"
+}
+```
+
+## 401 Unauthorized
+
+All TaskFlow API endpoints require Bearer token authentication.
+
+Requests without a valid API key return:
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+**How to fix it:**
+
+1. Confirm that your API key is valid.
+2. Include the `Authorization` header.
+3. Use the `Bearer` authentication scheme.
+4. Check for extra spaces or incorrect characters.
+
+Example:
+
+```bash
+curl --request POST \
+  --url https://test-writechoice.onrender.com/projects \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{"name":"My First Project"}'
+```
+
+For more information, see [Authentication](/authentication).
+
+## 404 Not Found
+
+A `404 Not Found` response indicates that the requested project or task could not be found.
+
+### Project not found
+
+This error can occur when creating a task or retrieving tasks using a project ID that does not exist.
+
+Example:
+
+```json
+{
+  "error": "Not Found",
+  "message": "No project found with project_id '00000000-0000-4000-8000-000000000000'."
+}
+```
+
+**How to fix it:**
+
+1. Create a project using `POST /projects`, if necessary.
+2. Copy the `project_id` from the response.
+3. Use that identifier in subsequent requests.
+
+### Task not found
+
+This error can occur when updating or deleting a task that does not exist.
+
+Example:
+
+```json
+{
+  "error": "Not Found",
+  "message": "No task found with task_id '946368b5-239c-404e-9a2c-839df19c97f5'."
+}
+```
+
+**How to fix it:**
+
+Verify the `task_id` returned by `POST /tasks`.
+
+If the task was previously deleted, create a new task before attempting to update or delete it again.
+
+## Empty task list
+
+An empty task list does not necessarily indicate an error.
+
+If a project exists but has no tasks, the API returns `200 OK` with an empty array.
+
+```json
+{
+  "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+  "total": 0,
+  "tasks": []
+}
+```
+
+**How to fix it:**
+
+If you expected tasks to appear, verify that you are using the correct `project_id` and that tasks have been created for that project.
+
+## Slow initial response
+
+The TaskFlow API test server may take up to 60 seconds to respond to the first request after a period of inactivity.
+
+This is expected behavior in the provided test environment.
+
+If the first request takes longer than expected, allow the server time to start and retry the request.
+
+## Still having trouble?
+
+Before retrying a failed request, check:
+
+- The request URL and HTTP method.
+- The `Authorization` header.
+- The `Content-Type: application/json` header when sending JSON.
+- Required fields in the request body.
+- Project and task identifiers.
+- Allowed task status values.
+
+For a complete walkthrough, see the [Quickstart](/quickstart) guide.
