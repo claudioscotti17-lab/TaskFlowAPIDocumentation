@@ -1,4 +1,5 @@
 {
+  "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "TaskFlow API",
   "colors": {
@@ -10,7 +11,7 @@
   "navbar": {
     "links": [
       {
-        "href": "https://github.com/claudioscotti17-lab/taskflowapidocumentation",
+        "href": "https://github.com/claudioscotti17-lab/TaskFlowAPIDocumentation",
         "label": "GitHub"
       }
     ]
@@ -31,8 +32,12 @@
         "pages": [
           "index",
           "quickstart",
-          "autenthication"
+          "authentication"
         ]
+      },
+      {
+        "group": "API Reference",
+        "openapi": "openapi.yaml"
       }
     ]
   }
