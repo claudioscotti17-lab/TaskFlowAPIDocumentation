@@ -28,6 +28,7 @@ https://test-writechoice.onrender.com
 ## Authentication
 
 Every request requires an API key in the `Authorization` header using the Bearer authentication scheme.
+For more information about API keys and authentication, see the [Authentication guide](/authentication).
 
 ```http
 Authorization: Bearer YOUR_API_KEY
@@ -184,6 +185,8 @@ Every task has a status that represents its current progress.
 | `done` | The task has been completed. |
 
 You can change a task's status using `PATCH /tasks/{task_id}`.
+You can also update a task's title or description using the same endpoint. See the API Reference for the complete request schema and available responses.
+
 
 ## Troubleshooting
 
@@ -199,6 +202,8 @@ If a request fails, check the HTTP status code and the response body.
   Error responses contain an `error` field and a human-readable `message` field to help identify the problem.
 </Note>
 
+For detailed error examples and step-by-step solutions, see the [Troubleshooting guide](/troubleshooting).
+
 ## Next steps
 
 You have successfully created a project, added a task, and retrieved its details through the project task list.
@@ -211,3 +216,5 @@ You can now explore the remaining TaskFlow operations:
 <Warning>
   Deleting a task is permanent and cannot be undone.
 </Warning>
+
+For a complete overview of authentication requirements, request parameters, response schemas, and supported operations, explore the API Reference in the navigation menu.
