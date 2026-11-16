@@ -1,1 +1,84 @@
+---
+title: "Authentication"
+description: "Learn how to authenticate requests to the TaskFlow API using a Bearer token."
+---
 
+# Authentication
+
+The TaskFlow API uses Bearer token authentication to protect its endpoints.
+
+Every API request must include a valid API key in the `Authorization` header. Requests without a valid key return a `401 Unauthorized` response.
+
+## API credentials
+
+For this documentation exercise, use the API key provided with the TaskFlow test environment.
+
+Replace `YOUR_API_KEY` in the examples below with your assigned key.
+
+<Note>
+The API key is provided for the TaskFlow technical writing exercise. In production environments, keep API keys private and never commit credentials to public repositories.
+</Note>
+
+## Authenticate with cURL
+
+Include the `Authorization` header when sending a request:
+
+```bash
+curl --request POST \
+  --url https://test-writechoice.onrender.com/projects \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "My First Project",
+    "description": "A project created using the TaskFlow API"
+  }'
+```
+
+A successful request returns `201 Created` and a JSON object containing the new project's details.
+
+## Authenticate with Postman
+
+You can also authenticate requests using Postman.
+
+1. Create a new HTTP request in Postman.
+2. Open the **Authorization** tab.
+3. Select **Bearer Token** as the authentication type.
+4. Enter your API key in the **Token** field, without the `Bearer` prefix.
+5. Send the request.
+
+Postman automatically adds the required authorization header.
+
+## Authentication errors
+
+If your request does not include a valid API key, the API returns:
+
+**HTTP 401 Unauthorized**
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key. Provide a valid key in the Authorization header as: Bearer <api_key>"
+}
+```
+
+### Troubleshooting
+
+If you receive a `401 Unauthorized` response:
+
+- Verify that the API key is correct.
+- Check that the authentication type is `Bearer Token`.
+- Confirm that the `Authorization` header is included.
+- Make sure there are no extra spaces or quotation marks around the token.
+
+## Security recommendations
+
+When working with API credentials:
+
+- Store credentials in environment variables or a secure secrets manager.
+- Avoid including API keys directly in source code.
+- Never publish credentials in public repositories.
+- Avoid sharing authenticated request logs that expose sensitive headers.
+
+## Next steps
+
+Once authentication is configured, follow the [Quickstart](/quickstart) guide to create your first project and task.
