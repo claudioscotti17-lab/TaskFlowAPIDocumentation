@@ -5,7 +5,7 @@ description: "Create your first project and task with the TaskFlow API."
 
 Get started with TaskFlow by creating a project, adding a task, and retrieving the project's task list.
 
-By the end of this tutorial, you will have made three successful API requests and learned how projects and tasks are connected.
+By the end of this tutorial, you will have explored all five TaskFlow API endpoints and learned how to create, retrieve, update, and delete tasks within a project.
 
 ## Prerequisites
 
@@ -175,7 +175,6 @@ Content-Type: application/json
   </Step>
 </Steps>
 
-
 ## Update a task
 
 After creating and retrieving your task, you can update its status to reflect its progress.
@@ -213,6 +212,50 @@ Example response:
 The `status` field now shows `done`, indicating that the task has been completed.
 
 You can also use this endpoint to update a task's title or description.
+
+## Delete a task
+
+After completing your task, you can delete it using the TaskFlow API.
+
+Send a `DELETE` request to `/tasks/{task_id}` using the `task_id` returned when you created the task.
+
+```bash
+curl --request DELETE \
+  --url https://test-writechoice.onrender.com/tasks/YOUR_TASK_ID \
+  --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+Replace `YOUR_TASK_ID` with your task's actual ID.
+
+A successful request returns `200 OK`, confirming that the task was deleted.
+
+<Warning>
+  Deleting a task is permanent and cannot be undone.
+</Warning>
+
+### Verify the deletion
+
+To confirm that the task was removed, retrieve the project's task list again:
+
+```bash
+curl --request GET \
+  --url https://test-writechoice.onrender.com/projects/YOUR_PROJECT_ID/tasks \
+  --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+If the deleted task was the project's only task, the response will look like this:
+
+```json
+{
+  "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+  "total": 0,
+  "tasks": []
+}
+```
+
+If the project contains other tasks, they will remain in the response.
+
+You have now completed the full task lifecycle: creating a project, creating a task, retrieving tasks, updating a task, and deleting a task.
 
 ## Understanding task statuses
 
