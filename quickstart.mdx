@@ -175,6 +175,45 @@ Content-Type: application/json
   </Step>
 </Steps>
 
+
+## Update a task
+
+After creating and retrieving your task, you can update its status to reflect its progress.
+
+Send a `PATCH` request to `/tasks/{task_id}` using the `task_id` returned when you created the task.
+
+```bash
+curl --request PATCH \
+  --url https://test-writechoice.onrender.com/tasks/YOUR_TASK_ID \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "status": "done"
+  }'
+```
+
+Replace `YOUR_TASK_ID` with the actual task ID.
+
+A successful request returns `200 OK` with the updated task details.
+
+Example response:
+
+```json
+{
+  "task_id": "946368b5-239c-404e-9a2c-839df19c97f5",
+  "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+  "title": "Write API quickstart guide",
+  "description": "Create a step-by-step getting started tutorial for TaskFlow API",
+  "status": "done",
+  "created_at": "2026-11-16T13:21:22.278Z",
+  "updated_at": "2026-11-16T13:25:00.000Z"
+}
+```
+
+The `status` field now shows `done`, indicating that the task has been completed.
+
+You can also use this endpoint to update a task's title or description.
+
 ## Understanding task statuses
 
 Every task has a status that represents its current progress.
