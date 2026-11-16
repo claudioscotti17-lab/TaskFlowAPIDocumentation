@@ -32,7 +32,8 @@
         "pages": [
           "index",
           "quickstart",
-          "authentication"
+          "authentication",
+          "troubleshooting"
         ]
       },
       {
