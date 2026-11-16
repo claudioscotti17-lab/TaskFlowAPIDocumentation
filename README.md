@@ -1,55 +1,80 @@
-# Mintlify Starter Kit
+# TaskFlow API Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Public-facing developer documentation for the TaskFlow REST API, created as part of a technical writing assessment.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+**[View the live documentation](https://task-flow-api-documentation.mintlify.site/)**
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## Overview
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+TaskFlow is a task management API that allows developers to create projects, manage tasks, track progress, and update task statuses.
 
-## AI-assisted writing
+This documentation project helps developers understand the API, authenticate requests, and complete common workflows.
 
-Set up your AI coding tool to work with Mintlify:
+## Documentation
 
-```bash
-npx skills add https://mintlify.com/docs
+The published documentation includes:
+
+- **Introduction:** API overview, core concepts, and available operations.
+- **Quickstart:** Step-by-step instructions for creating a project, adding a task, and retrieving tasks.
+- **Authentication:** Bearer token authentication using cURL and Postman.
+- **API Reference:** Request parameters, response schemas, examples, and error codes for all five endpoints.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/projects` | Create a project |
+| POST | `/tasks` | Create a task |
+| GET | `/projects/{project_id}/tasks` | List tasks in a project |
+| PATCH | `/tasks/{task_id}` | Update a task |
+| DELETE | `/tasks/{task_id}` | Delete a task |
+
+**Base URL:** `https://test-writechoice.onrender.com/`
+
+All requests require Bearer token authentication.
+
+## Documentation Approach
+
+The documentation was developed using the provided OpenAPI specification and live API testing with Postman.
+
+The process included:
+
+1. Reviewing the API specification and identifying endpoint dependencies.
+2. Testing successful requests and common error scenarios.
+3. Creating developer-oriented guides with practical examples.
+4. Integrating the OpenAPI specification with Mintlify.
+5. Publishing and reviewing the documentation.
+
+The content is organized around a developer's workflow, from authentication and initial setup to creating and managing tasks.
+
+## Tools and Technologies
+
+- **Mintlify:** Documentation authoring and publishing.
+- **OpenAPI 3.1:** API specification and reference generation.
+- **Postman:** API testing and response validation.
+- **GitHub:** Source control and documentation management.
+- **MDX:** Documentation pages and examples.
+
+## Project Structure
+
+```text
+TaskFlowAPIDocumentation/
+├── docs.json
+├── index.mdx
+├── quickstart.mdx
+├── authentication.mdx
+├── openapi.yaml
+├── logo/
+├── favicon.svg
+└── README.md
 ```
 
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
+## Live Documentation
 
-See the guides for [Claude Code](https://www.mintlify.com/docs/guides/claude-code), [Codex](https://www.mintlify.com/docs/guides/codex), [Cursor](https://www.mintlify.com/docs/guides/cursor), and [Devin Desktop](https://www.mintlify.com/docs/guides/devin-desktop) for tool-specific setup.
+https://task-flow-api-documentation.mintlify.site/
 
-## Development
+## Author
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+Cláudio Scotti
 
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
-mint dev
-```
-
-View your local preview at `http://localhost:3000`.
-
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+Technical Writing Assessment — TaskFlow API
