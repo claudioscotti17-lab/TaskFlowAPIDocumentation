@@ -1,6 +1,4 @@
-
 {
-  "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "TaskFlow API",
   "colors": {
@@ -9,27 +7,11 @@
     "dark": "#1D4ED8"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-          "authentication"
-        ]
-      },
-      {
-        "group": "API Reference",
-        "openapi": "openapi.yaml"
-      }
-    ]
-  },
   "navbar": {
     "links": [
       {
-        "label": "GitHub",
-        "href": "https://github.com/claudioscotti17-lab/taskflowapidocumentation"
+        "href": "https://github.com/claudioscotti17-lab/taskflowapidocumentation",
+        "label": "GitHub"
       }
     ]
   },
@@ -39,6 +21,19 @@
       "view",
       "chatgpt",
       "claude"
+    ],
+    "display": "header"
+  },
+  "navigation": {
+    "pages": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "index",
+          "quickstart",
+          "autenthication"
+        ]
+      }
     ]
   }
 }
