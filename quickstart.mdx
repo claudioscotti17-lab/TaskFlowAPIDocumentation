@@ -1,9 +1,10 @@
 ---
 title: "Quickstart"
-description: "Create your first project and task with the TaskFlow API."
+description: "Learn how to create projects and manage the complete task lifecycle with the TaskFlow API."
+
 ---
 
-Get started with TaskFlow by creating a project, adding a task, and retrieving the project's task list.
+Get started with TaskFlow by creating a project and managing its tasks through a complete API workflow.
 
 By the end of this tutorial, you will have explored all five TaskFlow API endpoints and learned how to create, retrieve, update, and delete tasks within a project.
 
@@ -175,6 +176,20 @@ Content-Type: application/json
   </Step>
 </Steps>
 
+## Understanding task statuses
+
+Every task has a status that represents its current progress.
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | The task has not been started. |
+| `in_progress` | Work on the task is underway. |
+| `done` | The task has been completed. |
+
+You can change a task's status using `PATCH /tasks/{task_id}`.
+
+You can also update a task's title or description using the same endpoint. See the API Reference for the complete request schema and available responses.
+
 ## Update a task
 
 After creating and retrieving your task, you can update its status to reflect its progress.
@@ -208,6 +223,8 @@ Example response:
   "updated_at": "2026-11-16T13:25:00.000Z"
 }
 ```
+
+The response above is an example. The `updated_at` timestamp will reflect when your task was actually updated.
 
 The `status` field now shows `done`, indicating that the task has been completed.
 
@@ -257,21 +274,6 @@ If the project contains other tasks, they will remain in the response.
 
 You have now completed the full task lifecycle: creating a project, creating a task, retrieving tasks, updating a task, and deleting a task.
 
-## Understanding task statuses
-
-Every task has a status that represents its current progress.
-
-| Status | Meaning |
-| --- | --- |
-| `pending` | The task has not been started. |
-| `in_progress` | Work on the task is underway. |
-| `done` | The task has been completed. |
-
-You can change a task's status using `PATCH /tasks/{task_id}`.
-
-You can also update a task's title or description using the same endpoint. See the API Reference for the complete request schema and available responses.
-
-
 ## Troubleshooting
 
 If a request fails, check the HTTP status code and the response body.
@@ -307,9 +309,3 @@ To continue exploring the API:
 - Check the [Troubleshooting guide](/troubleshooting) for common errors and solutions.
 
 You can now use these operations to build your own task management workflows with the TaskFlow API.
-
-<Warning>
-  Deleting a task is permanent and cannot be undone.
-</Warning>
-
-For a complete overview of authentication requirements, request parameters, response schemas, and supported operations, explore the API Reference in the navigation menu.
