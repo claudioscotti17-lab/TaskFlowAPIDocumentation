@@ -8,22 +8,22 @@
     "light": "#3B82F6",
     "dark": "#1D4ED8"
   },
-  "favicon": "/favicon.svg", 
-"navigation": {
-  "pages": [
-    {
-      "group": "Getting Started",
-      "pages": [
-        "index",
-        "quickstart"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "openapi": "openapi.yaml"
-    }
-  ]
-}
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "pages": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "index",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "API Reference",
+        "openapi": "openapi.yaml"
+      }
+    ]
+  },
   "navbar": {
     "links": [
       {
@@ -41,4 +41,3 @@
     ]
   }
 }
-  
