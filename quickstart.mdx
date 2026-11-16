@@ -1,47 +1,213 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "Create your first project and task with the TaskFlow API."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+Get started with TaskFlow by creating a project, adding a task, and retrieving the project's task list.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+By the end of this tutorial, you will have made three successful API requests and learned how projects and tasks are connected.
 
 ## Prerequisites
 
-Before you begin, you must have:
+Before you begin, make sure you have:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+- A valid TaskFlow API key.
+- A terminal with cURL installed, or an HTTP client such as Postman.
+- Basic familiarity with HTTP requests and JSON.
 
-## Get started
+No SDK or additional dependencies are required.
+
+## Base URL
+
+Send all requests to:
+
+```text
+https://test-writechoice.onrender.com
+```
+
+## Authentication
+
+Every request requires an API key in the `Authorization` header using the Bearer authentication scheme.
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+Replace `YOUR_API_KEY` with your valid API key. Do not include the placeholder text in actual requests.
+
+For requests containing JSON, include the following header:
+
+```http
+Content-Type: application/json
+```
+
+<Warning>
+  Keep your API key private. Do not commit it to a public repository or include it in shared request examples.
+</Warning>
+
+## Create your first project and task
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Create a project">
+
+    A project groups related tasks. Before creating a task, you must create the project it belongs to.
+
+    Send a `POST` request to `/projects`:
 
     ```bash
-    npm install your-package
+    curl --request POST \
+      --url https://test-writechoice.onrender.com/projects \
+      --header "Authorization: Bearer YOUR_API_KEY" \
+      --header "Content-Type: application/json" \
+      --data '{
+        "name": "API Documentation Revamp",
+        "description": "Technical documentation validation project"
+      }'
     ```
+
+    A successful request returns `201 Created` and a JSON object containing the new project's details.
+
+    Example response:
+
+    ```json
+    {
+      "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+      "name": "API Documentation Revamp",
+      "description": "Technical documentation validation project",
+      "created_at": "2026-11-16T13:20:38.686Z"
+    }
+    ```
+
+    <Note>
+      Save the `project_id` returned by your request. You will need it to create and retrieve tasks. The ID and timestamp above are from a sample successful request; your values will differ.
+    </Note>
+
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+
+  <Step title="Create a task">
+
+    Now create a task within your project.
+
+    Send a `POST` request to `/tasks`, using the `project_id` returned in the previous step.
 
     ```bash
-    your-cli init
+    curl --request POST \
+      --url https://test-writechoice.onrender.com/tasks \
+      --header "Authorization: Bearer YOUR_API_KEY" \
+      --header "Content-Type: application/json" \
+      --data '{
+        "project_id": "YOUR_PROJECT_ID",
+        "title": "Write API quickstart guide",
+        "description": "Create a step-by-step getting started tutorial for TaskFlow API"
+      }'
     ```
+
+    Replace `YOUR_PROJECT_ID` with your project's actual ID.
+
+    A successful request returns `201 Created`.
+
+    Example response:
+
+    ```json
+    {
+      "task_id": "946368b5-239c-404e-9a2c-839df19c97f5",
+      "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+      "title": "Write API quickstart guide",
+      "description": "Create a step-by-step getting started tutorial for TaskFlow API",
+      "status": "pending",
+      "created_at": "2026-11-16T13:21:22.278Z",
+      "updated_at": "2026-11-16T13:21:22.278Z"
+    }
+    ```
+
+    New tasks automatically receive the `pending` status.
+
+    Save the returned `task_id` if you want to update or delete this task later.
+
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+
+  <Step title="Retrieve your project's tasks">
+
+    Verify that your task was created by retrieving the list of tasks associated with your project.
+
+    Send a `GET` request to `/projects/{project_id}/tasks`.
 
     ```bash
-    your-cli start
+    curl --request GET \
+      --url https://test-writechoice.onrender.com/projects/YOUR_PROJECT_ID/tasks \
+      --header "Authorization: Bearer YOUR_API_KEY"
     ```
+
+    Replace `YOUR_PROJECT_ID` with the ID returned when you created the project.
+
+    A successful request returns `200 OK`.
+
+    Example response:
+
+    ```json
+    {
+      "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+      "total": 1,
+      "tasks": [
+        {
+          "task_id": "946368b5-239c-404e-9a2c-839df19c97f5",
+          "project_id": "f29e7b0d-28dd-4206-b70c-918437ca2738",
+          "title": "Write API quickstart guide",
+          "description": "Create a step-by-step getting started tutorial for TaskFlow API",
+          "status": "pending",
+          "created_at": "2026-11-16T13:21:22.278Z",
+          "updated_at": "2026-11-16T13:21:22.278Z"
+        }
+      ]
+    }
+    ```
+
+    The response includes:
+
+    - `project_id`: The project whose tasks were retrieved.
+    - `total`: The number of tasks associated with the project.
+    - `tasks`: An array containing the project's task objects.
+
+    If the project exists but contains no tasks, the API returns an empty `tasks` array and `total` equal to `0`.
+
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+## Understanding task statuses
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+Every task has a status that represents its current progress.
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | The task has not been started. |
+| `in_progress` | Work on the task is underway. |
+| `done` | The task has been completed. |
+
+You can change a task's status using `PATCH /tasks/{task_id}`.
+
+## Troubleshooting
+
+If a request fails, check the HTTP status code and the response body.
+
+| HTTP status | Possible cause | What to do |
+| --- | --- | --- |
+| `400 Bad Request` | Required fields are missing or invalid. | Review the JSON request body and required fields. |
+| `401 Unauthorized` | The API key is missing or invalid. | Check the Bearer token in the Authorization header. |
+| `404 Not Found` | The referenced project does not exist. | Verify the project ID or create a project first. |
+
+<Note>
+  Error responses contain an `error` field and a human-readable `message` field to help identify the problem.
+</Note>
+
+## Next steps
+
+You have successfully created a project, added a task, and retrieved its details through the project task list.
+
+You can now explore the remaining TaskFlow operations:
+
+- Update a task's title, description, or status using `PATCH /tasks/{task_id}`.
+- Permanently delete a task using `DELETE /tasks/{task_id}`.
+
+<Warning>
+  Deleting a task is permanent and cannot be undone.
+</Warning>
