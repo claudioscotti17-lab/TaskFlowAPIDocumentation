@@ -28,6 +28,7 @@ https://test-writechoice.onrender.com
 ## Authentication
 
 Every request requires an API key in the `Authorization` header using the Bearer authentication scheme.
+
 For more information about API keys and authentication, see the [Authentication guide](/authentication).
 
 ```http
@@ -185,6 +186,7 @@ Every task has a status that represents its current progress.
 | `done` | The task has been completed. |
 
 You can change a task's status using `PATCH /tasks/{task_id}`.
+
 You can also update a task's title or description using the same endpoint. See the API Reference for the complete request schema and available responses.
 
 
@@ -196,7 +198,7 @@ If a request fails, check the HTTP status code and the response body.
 | --- | --- | --- |
 | `400 Bad Request` | Required fields are missing or invalid. | Review the JSON request body and required fields. |
 | `401 Unauthorized` | The API key is missing or invalid. | Check the Bearer token in the Authorization header. |
-| `404 Not Found` | The referenced project does not exist. | Verify the project ID or create a project first. |
+| `404 Not Found` | The referenced project or task does not exist. | Verify the project or task ID. |
 
 <Note>
   Error responses contain an `error` field and a human-readable `message` field to help identify the problem.
